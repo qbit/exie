@@ -1,0 +1,6 @@
+# Config for EXIE
+
+exie is a Lenovo x230 running 9front.
+
+## unique configurations
+- Local auth server (bound to tcp!127.1).
