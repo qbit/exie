@@ -1,0 +1,4 @@
+#!/bin/rc
+
+bind -a '#l1' /net
+
