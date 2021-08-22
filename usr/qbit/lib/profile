@@ -27,7 +27,6 @@ switch($service){
 case terminal
 	aux/acpi
 	auth/factotum
-	#auth/fgui
 	webcookies
 	webfs
 	plumber
