@@ -1,0 +1,10 @@
+#!/bin/rc
+window 0,0,100,500 stats -lmiscebz
+window 110,9,1357,758
+
+window -hide auth/fgui
+
+# run a system shell on the serial console
+#~ $#console 0 || window -scroll console
+#window 0,592,1366,768 -hide -scroll cat /dev/kprint
+window -hide -scroll cat /dev/kprint
