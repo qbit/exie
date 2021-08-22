@@ -1,0 +1,66 @@
+bind -qa $home/bin/rc /bin
+bind -qa $home/bin/$cputype /bin
+
+upasname='aaron@bolddaemon.com'
+
+go_version=1.17
+go_path=$home/sdk/gover/$go_version/go
+if(test -d $go_path){
+	bind -qa $go_path/bin /bin
+	bind -qa $go_path /sys/lib/go/amd64-$go_version
+	bind -qa $go_path/src $home/go/src
+}
+
+if(test -d $home/go/bin){
+	bind -qa $home/go/bin /bin
+}
+
+if(test -d $home/sdk/gover/bin){
+	bind -qa $home/sdk/gover/bin /bin
+}
+
+font=/lib/font/bit/vga/unicode.font
+if(test -d /lib/font/bit/Go-Mono)
+	font=/lib/font/bit/Go-Mono/Go-Mono.14.font
+
+switch($service){
+case terminal
+	aux/acpi
+	auth/factotum
+	#auth/fgui
+	webcookies
+	webfs
+	plumber
+	echo -n accelerated > '#m/mousectl'
+	echo -n 'res 3' > '#m/mousectl'
+	prompt=('% ' '	')
+	fn term%{ $* }
+	rio -i riostart
+case cpu
+	bind /mnt/term/dev/cons /dev/cons
+	bind -q /mnt/term/dev/consctl /dev/consctl
+	>[2] /dev/null {
+		cp /dev/sysname /mnt/term/dev/label
+		if(wsys=`{cat /mnt/term/env/wsys})
+			wsys=/mnt/term^$wsys
+	} 
+	bind -a /mnt/term/dev /dev
+	prompt=('cpu% ' '	')
+	fn cpu%{ $* }
+	if(! test -e /mnt/term/dev/wsys){
+		# call from drawterm
+		if(test -e /mnt/term/dev/secstore){
+			auth/factotum -n
+			read -m /mnt/term/dev/secstore >/mnt/factotum/ctl
+			echo >/mnt/term/dev/secstore
+		}
+		if not
+			auth/factotum
+		webcookies
+		webfs
+		plumber
+		rio -i riostart
+	}
+case con
+	prompt=('cpu% ' '	')
+}
