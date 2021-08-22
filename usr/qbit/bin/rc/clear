@@ -1,0 +1,5 @@
+#!/bin/rc
+
+if(test -f /mnt/wsys/text)
+	echo -n >/mnt/wsys/text
+
