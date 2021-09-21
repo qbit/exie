@@ -3,7 +3,7 @@ bind -qa $home/bin/$cputype /bin
 
 upasname='aaron@bolddaemon.com'
 
-go_version=1.17
+go_version=1.17.1
 go_path=$home/sdk/gover/$go_version/go
 if(test -d $go_path){
 	bind -qa $go_path/bin /bin
